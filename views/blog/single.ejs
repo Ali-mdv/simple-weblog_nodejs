@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include("components/head") %>
+<body>
+
+	<%- include("components/header") %>
+
+<main id="main">
+	<div class="container">
+		<div class="row topspace">
+			<div class="col-sm-8 col-sm-offset-2">
+ 				<article class="post">
+					<header class="entry-header">
+ 						<div class="entry-meta"> 
+ 							<span class="posted-on">
+								 <time class="entry-date published" date="<%= article.created_at %>">
+									 <%= article.created_at %>
+								</time>
+							</span>			
+ 						</div> 
+ 						<h1 class="entry-title">
+							<%= article.title %>
+							<br>
+							<small><i class="fa fa-eye"></i> <%= article.hits.length %></small>
+						</h1>
+						<div id="wrapper">
+							<form action="/rate_article" method="post" class="star-rating">
+								<p class="clasificacion">
+									<input type="hidden" name="article" value="<%= article.slug %>">
+									<input id="radio1" type="radio" name="rate" value="5">
+									<label for="radio1">&#9733;</label>
+									<input id="radio2" type="radio" name="rate" value="4">
+									<label for="radio2">&#9733;</label>
+									<input id="radio3" type="radio" name="rate" value="3">
+									<label for="radio3">&#9733;</label>
+									<input id="radio4" type="radio" name="rate" value="2">
+									<label for="radio4">&#9733;</label>
+									<input id="radio5" type="radio" name="rate" value="1">
+									<label for="radio5">&#9733;</label>
+								</p>
+								<p>
+								<button class="btn btn-action">Rate</button>
+								<% if(rate){ %>
+									<p style="font-size: 10px;">your rate : <%= rate.rate %></p>
+								<% } %>
+								</p>
+							</form>
+						  </div>
+					</header> 
+					<div class="entry-content" style="direction: rtl;"> 
+						<p><img alt="" src="<%= article.picture %>"></p>
+						<%- article.description %>
+						<p>نوشته شده توسط : <a href="/articles/author/<%= article.author.username %>"><%= article.author.first %> <%= article.author.last %></a></p>
+						<p>
+							دسته بندی : 
+							<% for(let cat of article.category){ %>
+								<a class="badge badge-info" href="/articles/category/<%= cat.slug %>"><%= cat.title %></a>
+							<% } %>
+						</p>
+					</div> 
+				</article><!-- #post-## -->
+			</div> 
+		</div> <!-- /row post  -->
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div id="comments">	
+					<h3 class="comments-title"><%= article.comments.length %> Comments</h3>
+					<a href="#comment-form" class="leave-comment">Leave a Comment</a>
+					<% article.comments.forEach(comment=>{ %>
+						<div class="comment-thread">
+							<details open class="comment" id="comment-1">
+								<a href="#comment-1" class="comment-border-link">
+									<span class="sr-only">Jump to comment-1</span>
+								</a>
+								<summary>
+									<div class="comment-heading">
+										<div class="comment-info">
+											<a href="#" class="comment-author"><%= comment.user.username %></a>
+											<p class="m-0">
+												<%= comment.created_at %>
+											</p>
+										</div>
+									</div>
+								</summary>
+				
+								<div class="comment-body">
+									<p>
+										<%= comment.message %>
+									</p>
+									<button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Reply</button>
+				
+									<form method="POST" action="/article/<%= article.slug %>" class="reply-form d-none" id="comment-1-reply-form">
+										<% if(errors.length > 0){ %>
+											<ul>
+												<% errors.forEach(err=>{ %>
+													<li style="color: red;"><%= err %></li>
+											</ul>
+										<% })} %>
+										
+										<% if(info.length > 0){ %>
+											<ul>
+												<li style="color: green;"><%= info %></li>
+											</ul>
+										<% } %>
+										<input type="hidden" name="comment_id" value="<%= comment._id %>">
+										<input type="hidden" name="article_id" value="<%= article._id %>">
+										<textarea name="message" placeholder="Reply to comment" rows="4"></textarea>
+										<button type="submit">Submit</button>
+										<button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Cancel</button>
+									</form>
+								</div>
+				
+								<% comment.replies.forEach(reply=>{ %>
+									<div class="replies">
+										<details open class="comment" id="comment-2">
+											<a href="#comment-2" class="comment-border-link">
+												<span class="sr-only">Jump to comment-2</span>
+											</a>
+											<summary>
+												<div class="comment-heading">
+													<div class="comment-info">
+														<a href="#" class="comment-author"><%= reply.user.username %></a>
+														<p class="m-0">
+															<%= reply.created_at %>
+														</p>
+													</div>
+												</div>
+											</summary>
+					
+											<div class="comment-body">
+												<p>
+													<%= reply.message %>
+												</p>
+												<button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Reply</button>
+					
+												<form method="POST" action="/article/<%= article.slug %>" class="reply-form d-none" id="comment-2-reply-form">
+													<% if(errors.length > 0){ %>
+														<ul>
+															<% errors.forEach(err=>{ %>
+																<li style="color: red;"><%= err %></li>
+														</ul>
+													<% })} %>
+													
+													<% if(info.length > 0){ %>
+														<ul>
+															<li style="color: green;"><%= info %></li>
+														</ul>
+													<% } %>
+													<input type="hidden" name="comment_id" value="<%= comment._id %>">
+													<input type="hidden" name="article_id" value="<%= article._id %>">
+													<textarea name="message" placeholder="Reply to comment" rows="4"></textarea>
+													<button type="submit">Submit</button>
+													<button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Cancel</button>
+												</form>
+											</div>
+										</details>
+										<a href="#load-more">Load more replies</a>
+									</div>
+								<% }) %>
+							</details>
+						</div>
+					<% }) %>
+
+					<nav id="comment-nav-below" class="comment-navigation clearfix" role="navigation">
+					</nav><!-- #comment-nav-below -->
+
+					<div id="respond">
+						<h3 id="reply-title">Leave a Comment</h3>
+						<form action="/article/<%= article.slug %>" method="post" id="commentform">
+
+							<% if(errors.length > 0){ %>
+								<ul>
+									<% errors.forEach(err=>{ %>
+										<li style="color: red;"><%= err %></li>
+								</ul>
+							<% })} %>
+							
+							<% if(info.length > 0){ %>
+								<ul>
+									<li style="color: green;"><%= info %></li>
+								</ul>
+							<% } %>
+
+							<div class="form-group">
+								<label for="inputComment">Comment</label>
+								<input type="hidden" name="article_id" value="<%= article._id %>">
+								<textarea name="message" class="form-control" rows="6"></textarea>
+							</div>
+							<div class="row">
+								<div class="col-md-2 text-right">
+  									<button type="submit" class="btn btn-action">Submit</button>
+								</div>
+							</div>
+						</form>
+					</div> <!-- /respond -->
+				</div>
+			</div>
+		</div> <!-- /row comments -->
+		<div class="clearfix"></div>
+	</div>	<!-- /container -->
+</main>
+
+<%- include("components/footer") %>
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<%- include("components/scripts") %>
+</body>
+</html>

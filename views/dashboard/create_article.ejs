@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<%- include('components/head') %>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+<!-- Navbar -->
+<%- include("components/navbar") %>
+<!-- /.navbar -->
+
+<!-- Main Sidebar Container -->
+<%- include("components/aside") %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+        </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="container-fluid">
+          <div class="card-header">
+              <h3 class="card-title">Create Article</h3>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" data-bitwarden-watching="1" method="post" 
+              action= <% if(Object.keys(article) == 0){ %>
+                "/dashboard/article/create"
+                <% }else{ %>
+                  "/dashboard/article/<%= article.slug %>?method=PUT"
+              <% } %>
+              enctype="multipart/form-data">
+              <div class="card-body">
+
+              <% if(errors.length > 0){ %>
+                  <ul>
+                      <% errors.forEach(err=>{ %>
+                          <li style="color: red;"><%= err %></li>
+                  </ul>
+              <% })} %>
+              
+              <% if(info.length > 0){ %>
+                  <ul>
+                      <li style="color: green;"><%= info %></li>
+                  </ul>
+              <% } %>
+                <div class="form-group">
+                  <label for="title_input">Title</label>
+                  <input type="text" name="title" class="form-control" id="title_input" placeholder="Title" value="<%= article.title %>" required>
+                </div>
+                <div class="form-group">
+                  <label for="slug_input">Slug</label>
+                  <input type="text" name="slug" class="form-control" id="slug_input" placeholder="Slug" value="<%= article.slug %>" required>
+                </div>
+                <div class="form-group">
+                  <label for="description_input">Description</label>
+                  <textarea name="description" class="form-control" id="description_input" placeholder="Description"><%= article.description %></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">Picture</label>
+                  <div class="input-group">
+                    <% if(article.picture){ %>
+                      <a class="btn btn-secondary" target="_blank" href="<%= article.picture %>">Current Picture</a>
+                    <% } %>
+                    <div class="custom-file">
+                      <input type="file" name="picture" class="custom-file-input" id="picture_input">
+                      <label class="custom-file-label" for="picture_input">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="">Upload</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="category_input">Category</label><br>
+                  <select name="category" id="category_input" multiple required>
+                    <% categories.forEach(cat=>{ %>
+                      <% if(article.category){ %>
+                        <% if(article.category.includes(cat._id)){ %>
+                          <option value="<%= cat._id %>" selected><%= cat.title %></option>
+                        <% }else{ %>
+                          <option value="<%= cat._id %>"><%= cat.title %></option>
+                        <% } %>
+                    <% }else{ %>
+                      <option value="<%= cat._id %>"><%= cat.title %></option>
+                    <% } %>
+                    <% }) %>
+                  </select>
+                </div>
+                <% if(user.is_admin){ %>
+                  <div class="form-check">
+                    <input type="checkbox" name="status" class="form-check-input" id="status_input" value="true" 
+                      <% if(article.status){ %>
+                        checked
+                      <% } %>>
+                    <label class="form-check-label" for="status_input">Status</label>
+                  </div>
+                <% } %>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+            <% if(Object.keys(article) != 0){ %>
+              <form action="/dashboard/article/<%= article.slug %>?method=DELETE" method="post">
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Footer -->
+<%- include("components/footer") %>
+<!-- /.footer -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<%- include('components/scripts'); %>
+</body>
+</html>

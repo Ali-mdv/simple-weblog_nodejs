@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include("components/head") %>
+</head>
+<body>
+
+	<%- include("components/header") %>
+
+    <main id="main">
+        <div class="container">
+            <div class="row topspace">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="text-center" style="direction: rtl; background-color: rgb(150, 236, 236);">
+                        <h3>همه ی دسته بندی ها</h3>
+                        <hr>
+                    </div>
+
+                    <% categories.forEach(cat => { %>
+                        <article class="post">
+                            <header class="entry-header">
+                                <h3>
+                                    <a href="/articles/category/<%= cat.slug %>" rel="bookmark">
+                                        <%= cat.title %>
+                                    </a>
+                                </h3>
+                            </header> 
+                        </article><!-- #post-## -->
+                    <% }) %>
+                </div> 
+            </div>
+    
+
+            
+        </div>	<!-- /container -->
+    
+    </main>
+
+<%- include("components/footer") %>
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<%- include("components/scripts") %>
+</body>
+</html>

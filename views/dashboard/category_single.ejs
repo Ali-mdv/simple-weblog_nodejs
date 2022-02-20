@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<%- include('components/head') %>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+<!-- Navbar -->
+<%- include("components/navbar") %>
+<!-- /.navbar -->
+
+<!-- Main Sidebar Container -->
+<%- include("components/aside") %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+        </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="container-fluid">
+          <div class="card-header">
+              <h3 class="card-title">Create Article</h3>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" data-bitwarden-watching="1" method="post" 
+              action= <% if(Object.keys(category) == 0){ %>
+                "/dashboard/category/create"
+                <% }else{ %>
+                  "/dashboard/category/<%= category.slug %>?method=PUT"
+              <% } %>
+            >
+              <div class="card-body">
+
+              <% if(errors.length > 0){ %>
+                  <ul>
+                      <% errors.forEach(err=>{ %>
+                          <li style="color: red;"><%= err %></li>
+                  </ul>
+              <% })} %>
+              
+              <% if(info.length > 0){ %>
+                  <ul>
+                      <li style="color: green;"><%= info %></li>
+                  </ul>
+              <% } %>
+
+                <div class="form-group">
+                  <label for="title_input">Title</label>
+                  <input type="text" name="title" class="form-control" id="title_input" placeholder="Title" value="<%= category.title %>">
+                </div>
+                <div class="form-group">
+                  <label for="slug_input">Slug</label>
+                  <input type="text" name="slug" class="form-control" id="slug_input" placeholder="Slug" value="<%= category.slug %>">
+                </div>
+                <div class="form-check">
+                  <% if(category.status){ %>
+                    <input type="checkbox" name="status" class="form-check-input" id="status_input" value="true" checked>
+                  <% }else{ %>
+                    <input type="checkbox" name="status" class="form-check-input" id="status_input" value="true">
+                  <% } %>
+                  <label for="status_input">Status</label>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+            <% if(Object.keys(category) != 0){ %>
+              <form action="/dashboard/category/<%= category.slug %>?method=DELETE" method="post">
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Footer -->
+<%- include("components/footer") %>
+<!-- /.footer -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<%- include('components/scripts'); %>
+</body>
+</html>

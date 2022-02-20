@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <%- include('components/head') %>
+    <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+    <!-- Navbar -->
+    <%- include("components/navbar") %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include("components/aside") %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                </ol>
+            </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="container-fluid">
+        
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Read Contact</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-info">
+                            <h4><%= contact.name %></h4>
+                            <h5><%= contact.subject %></h5>
+                            <h6><%= contact.email %></h6>
+                            <time>
+                                <span class="mailbox-read-time float-right"><%= contact.created_at %></span>
+                            </time>
+                        </div>
+                        <hr>
+                        <div class="mailbox-read-message">
+                            <%= contact.message %>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-default">
+                            <i class="fas fa-reply"></i> 
+                            Reply
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <i class="fas fa-share"></i> 
+                            Forward
+                        </button>
+                    </div>
+                    <form action="/dashboard/contact-us/<%= contact._id %>?method=DELETE" method="post">
+                        <button class="btn btn-default">
+                            <i class="far fa-trash-alt"></i>
+                            Delete
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default">
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Footer -->
+    <%- include("components/footer") %>
+    <!-- /.footer -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <%- include('components/scripts'); %>
+    </body>
+</html>
+  

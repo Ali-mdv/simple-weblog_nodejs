@@ -1,0 +1,5 @@
+cookie_secret = "cookie_secret"
+session_secret = "session_secret"
+
+email_username = "email_username"
+email_password = "email_password"

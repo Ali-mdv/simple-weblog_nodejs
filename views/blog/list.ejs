@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include("components/head") %>
+</head>
+<body>
+
+	<%- include("components/header") %>
+
+<main id="main">
+	<div class="container">
+		<div class="row topspace">
+			<div class="col-sm-8 col-sm-offset-2">
+				<% if(route == "author"){ %>
+					<div class="text-center" style="direction: rtl; background-color: rgb(150, 236, 236);">
+						<h3>نویسنده : <%= author.first %> <%= author.last %></h3>
+						<hr>
+					</div>
+				<% }else if(route == "category"){ %>
+					<div class="text-center" style="direction: rtl; background-color: rgb(150, 236, 236);">
+						<h3>دسته بندی : <%= category.title %></h3>
+						<hr>
+					</div>
+				<% }else if(route == "search"){ %>
+					<div class="text-center" style="direction: rtl; background-color: rgb(150, 236, 236);">
+						<h3>جست و جو : <%= search %></h3>
+						<hr>
+					</div>
+				<% } %>
+
+				<% articles.forEach(article => { %>
+					<article class="post">
+						<header class="entry-header">
+							<div class="entry-meta"> 
+								<span class="posted-on">
+									<time class="entry-date published" date="2013-06-17">
+										<%= article.published_at %>
+									</time>
+								</span>			
+							</div> 
+							<h1 class="entry-title">
+								 <a href="/article/<%= article.slug %>" rel="bookmark">
+									<%= article.title %>
+								</a>
+							</h1>
+						</header> 
+						<div class="entry-content" style="direction: rtl;"> 
+							<p>
+								<img alt="<%= article.title %>" src="<%= article.picture %>">
+							</p>
+							<p>
+								<% function tr(text,length){ %>
+									<% let text_arr = text.replace(/(<([^>]+)>)/gi, "").split("") %>
+									<% let truncate_arr = [] %>
+									<% for(let i = 0; i<length ; i++){ %>
+									  <% truncate_arr.push(text_arr[i]) %>
+									<% } %>
+									<% return truncate_arr.join("") %>
+								  <% } %>
+								  <%= tr(article.description,200) %>
+								  <a href="/article/<%= article.slug %>" class="more-link" style="display: inline;">ادامه&#8230;</a>
+							</p>
+						</div> 
+					</article><!-- #post-## -->
+				<% }) %>
+			</div> 
+		</div>
+
+		<center class="">
+			<ul class="pagination">
+				<% if(page <= 1){ %>
+					<li class= "disabled">
+						<a>&laquo;</a>
+					</li>
+				<% }else{ %>
+					<li>
+						<% if(route == "author"){ %>
+						<a href="/articles/author/<%= author.username %>?page=<%= page-1 %>">&laquo;</a>
+						<% }else if(route == "category"){ %>
+							<a href="/articles/category/<%= category.slug %>?page=<%= page-1 %>">&laquo;</a>
+						<% }else{ %>
+							<a href="/articles?page=<%= page-1 %>&search=<%= search %>">&laquo;</a>
+						<% } %>
+					</li>
+				<% } %>
+				<li class="disabled active">
+					<a><%= page %></a>
+				</li>
+				<% if(page >= pages){ %>
+					<li class= "disabled">
+						<a>&raquo;</a>
+					</li>
+				<% }else{ %>
+					<li>
+						<% if(route == "author"){ %>
+							<a href="/articles/author/<%= author.username %>?page=<%= page+1 %>">&raquo;</a>
+							<% }else if(route == "category"){ %>
+								<a href="/articles/category/<%= category.slug %>?page=<%= page+1 %>">&raquo;</a>
+							<% }else{ %>
+								<a href="/articles?page=<%= page+1 %>&search=<%= search %>">&raquo;</a>
+							<% } %>
+					</li>
+				<% } %>
+			</ul>
+		</center>
+		
+	</div>	<!-- /container -->
+
+</main>
+
+<%- include("components/footer") %>
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<%- include("components/scripts") %>
+</body>
+</html>

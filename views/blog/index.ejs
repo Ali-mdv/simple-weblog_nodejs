@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include("components/head") %>
+<body class="home">
+
+	<%- include("components/header") %>
+
+<main id="main">
+
+	<div class="container">
+		<div class="row section topspace">
+			<div class="col-md-12">
+				<p class="lead text-center text-muted">Let me tell you something my friend. hope is a dangerous thing. hope can drive a man insane. you <a href="about.html">measure</a> yourself by the people who measure themselves by you. it only took me <a href="sidebar-right.html">six days</a>. </p>
+			</div>
+		</div> <!-- / section -->
+		
+
+		<!-- Best Articles -->
+		<div class="row section featured topspace">
+			<h2 class="section-title"><span>Top Rated Articles</span></h2>
+			<div class="row">
+				<% best_articles.forEach(article=>{ %>
+					<div class="col-sm-6 col-md-3">
+						<h4 class="text-center"><%= article.article[0].title %></h4>
+						<p class="text-center">Rating : <%= article.avgRating %></p>
+						<!-- <p class="text-center"><%= article.article[0].description.slice(0,150) %></p> -->
+						<p class="text-center"><a href="/article/<%= article.article[0].slug %>" class="btn btn-action">Read more</a></p>
+					</div>
+				<% }) %>
+			</div>
+		</div>
+
+		<!-- Popular Articles -->
+		<div class="row section featured topspace">
+			<h2 class="section-title"><span>Popular Articles</span></h2>
+			<div class="row">
+				<% popular_articles.forEach(article=>{ %>
+					<div class="col-sm-6 col-md-3">
+						<h4 class="text-center"><%= article.title %></h4>
+						<p class="text-center"><i class="fa fa-eye"></i> <%= article.hits.length %></p>
+						<!-- <p class="text-center"><%= article.description.slice(0,150) %></p> -->
+						<p class="text-center"><a href="/article/<%= article.slug %>" class="btn btn-action">Read more</a></p>
+					</div>
+				<% }) %>
+			</div>
+		</div>
+
+		<!-- Hot Articles -->
+		<!-- <div class="row section featured topspace">
+			<h2 class="section-title"><span>Hot Articles</span></h2>
+			<div class="row">
+				<% best_articles.forEach(article=>{ %>
+					<div class="col-sm-6 col-md-3">
+						<h4 class="text-center"><%= article.article[0].title %></h4>
+						<p class="text-center">
+							<% function tr(text,length){ %>
+								<% let text_arr = text.replace(/(<([^>]+)>)/gi, "").split("") %>
+								<% let truncate_arr = [] %>
+								<% for(let i = 0; i<length ; i++){ %>
+								  <% truncate_arr.push(text_arr[i]) %>
+								<% } %>
+								<% return truncate_arr.join("") %>
+							  <% } %>
+							  <%= tr(article.article[0].description,50) %>
+						</p>
+						<p class="text-center"><a href="/article/<%= article.article[0].slug %>" class="btn btn-action">Read more</a></p>
+					</div>
+				<% }) %>
+			</div>
+		</div> -->
+
+		
+		<div class="row section recentworks topspace">
+			
+			<h2 class="section-title"><span>Recent Articles</span></h2>
+			
+			<div class="thumbnails recentworks row">
+				<% new_articles.forEach(article =>{ %>
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+						<a class="thumbnail" href="article/<%= article.slug %>">
+							<span class="img">
+								<img src="<%= article.picture %>" alt="">
+								<span class="cover"><span class="more">See details &rarr;</span></span>
+							</span>
+							<span class="title"><%= article.title %></span>
+						</a>
+						<span class="details">
+							<a><i class="fa fa-eye"></i> <%= article.hits.length %></a> |
+							<a><%= article.created_at %></a> | 
+							<a href="/articles/author/<%= article.author.username %>"><%= article.author.first %> <%= article.author.last %></a>
+						</span>
+						<h4></h4>
+						<p></p>
+					</div>
+				<% }) %>
+			</div>
+
+		</div> <!-- /section -->
+
+		<div class="row section topspace">
+			<div class="panel panel-cta"><div class="panel-body">
+				<div class="col-lg-8">
+					<p>A simple, nice-looking <b>call to action box</b>. Boxing is about respect. getting it for yourself, 
+					and taking it away from the other guy. no, this is mount everest. </p>
+				</div>
+				<div class="col-lg-4 text-right">
+					<a href="http://www.gettemplate.com/downloads/initio.zip " class="btn btn-primary btn-lg">Download template</a>
+				</div>
+			</div></div>
+		</div> <!-- /section -->
+
+		<div class="row section clients topspace">
+			<h2 class="section-title"><span>Clients</span></h2>
+			<div class="col-lg-12">
+				<p>
+					<img src="blog/images/sample_clients.png" alt="">
+				</p>
+			</div>
+		</div> <!-- /section -->
+	</div>	<!-- /container -->
+
+</main>
+
+<%- include("components/footer") %>
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+	<%- include("components/scripts") %>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "simple_blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "author": "ali mahdavi",
+  "license": "ISC",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "auto-bind": "^4.0.0",
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.7",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^14.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "express-async-errors": "^3.1.1",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.14.0",
+    "html-to-text": "^8.1.0",
+    "humanize": "^0.0.9",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.1.7",
+    "mongoose-timestamp": "^0.6.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "nodemailer": "^6.7.2",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "winston": "^3.4.0"
+  }
+}

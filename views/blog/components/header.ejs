@@ -1,0 +1,60 @@
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="2">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="/blog/images/blog.png" alt="">
+			<span class="title">Ali Mahdavi</span>
+			<span class="tagline">A mystery person<br>
+				<a href="">alimdv74.am@outlook.com</a></span>
+		</h1>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky">
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/">Home</a></li>
+					<li><a href="/about-us">About</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							More Pages 
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/articles">All Articles</a></li>
+							<li><a href="/categories">Category</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/dashboard/articles">
+							<% if(user){ %>
+								<%= user.username %>
+							<% }else{ %>
+								Account
+							<% } %>
+						</a>
+					</li>
+					<li>
+						<form action="/articles" class="input-group"> 
+							<input type="text" name="search" class="form-control" placeholder="Search for..." value="<%= search %>">
+							<span class="input-group-btn">
+								<button class="btn btn-default">Go!</button>
+							</span>
+						</form>
+					</li>
+				</ul>
+
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <%- include('components/head') %>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <%- include("components/navbar") %>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <%- include("components/aside") %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card-header">
+          <!-- <h3 class="card-title">DataTable with default features</h3> -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+            <form action="">
+              <div class="row">
+                <div class="col-sm-12 col-md-2">
+                  <div class="dataTables_length" id="example1_length">
+                    <label>Show 
+                      <select name="entries" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select> 
+                      entries
+                    </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div id="example1_filter" class="dataTables_filter">
+                      <label>Search
+                        <input type="search" class="form-control form-control-sm" name="search" aria-controls="example1" value="<%= search %>">
+                      </label>
+                      <button>Send</button>
+                    </div>
+                  </div>
+              </div>
+            </form>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                    <thead>
+                    <tr role="row">
+                      <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 159.35px;" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                        Title
+                      </th>
+                      <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 159.35px;" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                        Slug
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 93.5667px;" aria-label="CSS grade: activate to sort column ascending">
+                        Status
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <% categories.forEach((cat,i)=>{ %>
+                        <!-- <tr role="row" class="odd"> -->
+                        <tr role="row" class="<% i%2==0? 'odd':'even' %>">
+                          <td class="sorting_1">
+                              <a href="/dashboard/category/<%= cat.slug %>">
+                                  <%= cat.title %>
+                                </a>
+                            </td>
+                          <td><%= cat.slug %></td>
+                          <td><% if(cat.status){ %>
+                            <i class="fas fa-check-circle"></i>
+                          <% }else{ %>
+                            <i class="far fa-times-circle"></i>
+                          <% } %>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                    <tfoot>
+                      <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 159.35px;" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                          Title
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 207.2px;" aria-label="Browser: activate to sort column ascending">
+                          Slug
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 93.5667px;" aria-label="CSS grade: activate to sort column ascending">
+                          Status
+                        </th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                    Showing <%= page_by*(page - 1) + 1 %> to <%= count - (count - (page_by * (page - 1) + categories.length)) %> of <%= count %> entries
+                  </div>
+                </div>
+  
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                    <ul class="pagination">
+                      <% if(page == 1){ %>
+                        <li class="paginate_button page-item previous disabled" id="example1_previous">
+                          <a aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
+                            Previous
+                          </a>
+                        </li>
+                      <% }else{ %>
+                        <li class="paginate_button page-item previous" id="example1_previous">
+                          <a href="/dashboard/categories?page=<%= page-1 %>&entries=<%= page_by %>&search=<%= search %>" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
+                            Previous
+                          </a>
+                        </li>
+                      <% } %>
+  
+                      <li class="paginate_button page-item active disabled">
+                        <a href="/dashboard/categories?page=<%= page %>&entries=<%= page_by %>&search=<%= search %>" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+                          <%= page %>
+                        </a>
+                      </li>
+  
+                      <% if(page >= pages){ %>
+                        <li class="paginate_button page-item next disabled" id="example1_next">
+                          <a aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">
+                            Next
+                          </a>
+                        </li>
+                      <% }else{ %>
+                        <li class="paginate_button page-item next" id="example1_next">
+                          <a href="/dashboard/categories?page=<%= page+1 %>&entries=<%= page_by %>&search=<%= search %>" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">
+                            Next
+                          </a>
+                        </li>
+                      <% } %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+  <!-- /.content-wrapper -->
+
+  <!-- Footer -->
+  <%- include("components/footer") %>
+  <!-- /.footer -->
+
+</div>
+<!-- ./wrapper -->
+  <%- include('components/scripts'); %>
+</body>
+</html>
