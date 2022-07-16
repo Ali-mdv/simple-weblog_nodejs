@@ -9,7 +9,7 @@ function isAuthenticated(req,res,next){
 function isActive(req,res,next){
     if(!req.user.is_active){
         req.flash("info","your account in not activate\nfor create article neet to active account");
-        res.redirect("/user/profile");
+        return res.redirect("/user/profile");
     };
     next();
 };
@@ -17,7 +17,7 @@ function isActive(req,res,next){
 function isAdmin(req,res,next){
     if(!req.user.is_admin){
         req.flash("info","your account in not activate\nfor create article neet to active account");
-        res.redirect("/dashboard/articles");
+        return res.redirect("/dashboard/articles");
     };
     next();
 };
